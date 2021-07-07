@@ -182,7 +182,7 @@ static const uint16_t correct_rs_primitive_polynomial_ccsds =
 
 /* correct_reed_solomon_create allocates and initializes an
  * encoder/decoder for a given reed solomon error correction
- * code. The block size must be 255 bytes with 8-bit symbols.
+ * code.
  *
  * This block can repair corrupted bytes. It can handle as
  * many as num_roots/2 bytes having corruption and still recover
@@ -194,11 +194,15 @@ static const uint16_t correct_rs_primitive_polynomial_ccsds =
  * file. Sane values for first_consecutive_root and
  * generator_root_gap are 1 and 1. Not all combinations of
  * values produce valid codes.
+ *
+ * block_length must be enough to hold both the message and the
+ * parity data specified in num_roots.
  */
 correct_reed_solomon *correct_reed_solomon_create(uint16_t primitive_polynomial,
                                                   uint8_t first_consecutive_root,
                                                   uint8_t generator_root_gap,
-                                                  size_t num_roots);
+                                                  size_t num_roots,
+                                                  size_t block_length);
 
 /* correct_reed_solomon_encode uses the rs instance to encode
  * parity information onto a block of data. msg_length should be
